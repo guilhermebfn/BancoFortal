@@ -1,4 +1,4 @@
-package entidades;
+package com.guilherme.bancofortal.entidades;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

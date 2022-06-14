@@ -1,4 +1,4 @@
-package entidades;
+package com.guilherme.bancofortal.entidades;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -9,7 +9,7 @@ import java.util.Set;
 public class Cliente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Integer id;
 
