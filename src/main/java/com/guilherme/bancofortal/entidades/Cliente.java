@@ -1,8 +1,9 @@
 package com.guilherme.bancofortal.entidades;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table
@@ -14,6 +15,7 @@ public class Cliente {
     private Integer id;
 
     @Column
+    @NotEmpty
     private String nome;
 
     @Column
@@ -21,7 +23,7 @@ public class Cliente {
 
     @Column
     @OneToMany
-    private Set<Transacao> transacoes;
+    private List<Transacao> transacoes;
 
     public Cliente(String nome) {
         this.nome = nome;

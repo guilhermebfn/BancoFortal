@@ -9,7 +9,7 @@ import com.guilherme.bancofortal.repositorios.RepoCliente;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/cliente")
 public class ControladorCliente {
 
     private RepoCliente repoCliente;
