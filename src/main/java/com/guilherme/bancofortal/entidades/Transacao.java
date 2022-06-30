@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class Transacao {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Integer id;
 
@@ -18,15 +18,15 @@ public class Transacao {
     @NotNull
     private BigDecimal valor;
 
-    @Column
+    @JoinColumn
     @OneToOne
     private Cliente pagador;
 
-    @Column
+    @JoinColumn
     @OneToOne
     private Cliente recebedor;
 
-    @Column
+    @Column(name = "data_hora")
     private LocalDateTime dataHora;
 
     public Transacao(BigDecimal valor, Cliente pagador, Cliente recebedor, LocalDateTime dataHora) {

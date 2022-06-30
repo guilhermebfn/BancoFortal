@@ -21,9 +21,9 @@ public class Cliente {
     @Column
     private BigDecimal saldo;
 
-    @Column
-    @OneToMany
-    private List<Transacao> transacoes;
+//    @Column
+//    @OneToMany
+//    private List<Transacao> transacoes;
 
     public Cliente(String nome) {
         this.nome = nome;
