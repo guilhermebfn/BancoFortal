@@ -25,8 +25,17 @@ public class Cliente {
 //    @OneToMany
 //    private List<Transacao> transacoes;
 
+
+    public Cliente() {
+    }
+
     public Cliente(String nome) {
         this.nome = nome;
+    }
+
+    public Cliente(String nome, BigDecimal saldo) {
+        this.nome = nome;
+        this.saldo = saldo;
     }
 
     public Integer getId() {

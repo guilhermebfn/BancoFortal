@@ -1,36 +1,39 @@
 package com.guilherme.bancofortal.controladores;
 
-import com.guilherme.bancofortal.dto.ClienteDTO;
 import com.guilherme.bancofortal.entidades.Cliente;
-import org.springframework.data.domain.Example;
+import com.guilherme.bancofortal.exceptions.ClienteNaoEncontradoException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.guilherme.bancofortal.repositorios.RepoCliente;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
 @RequestMapping("/cliente")
 public class ControladorCliente {
 
+    @Autowired
     private RepoCliente repoCliente;
 
     // Incompleto. Método para validar a entrada do cliente no aplicativo
-    @GetMapping("entrar")
-    public Cliente entrar(ClienteDTO dto) {
-        String usuario = dto.getUsuario();
-        String senha = dto.getSenha();
+    @GetMapping("/{id}")
+    @ResponseBody
+    public Cliente entrar(@PathVariable int id) {
+        Optional<Cliente> cliente = repoCliente.findById(id);
+        return cliente.orElseThrow(ClienteNaoEncontradoException::new);
 
-//        if (repoCliente.find) {
-//        }
-
-        return null;
+        // Testar o método
     }
 
-    @PostMapping("cadastro")
-    @ResponseStatus(NO_CONTENT)
+    @PostMapping("/cadastro")
+    @ResponseBody
+    @ResponseStatus(CREATED)
     public Cliente cadastrar(@RequestBody Cliente cliente) {
-        repoCliente.save(cliente);
-        return cliente;
+        return repoCliente.save(cliente);
     }
 
 
