@@ -3,6 +3,7 @@ package com.guilherme.bancofortal.entidades;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,10 +22,11 @@ public class Cliente {
     @Column
     private BigDecimal saldo;
 
-//    @Column
-//    @OneToMany
-//    private List<Transacao> transacoes;
+    @OneToMany(mappedBy = "pagador")
+    private List<Transacao> transferenciasFeitas = new ArrayList<>();
 
+    @OneToMany(mappedBy = "recebedor")
+    private List<Transacao> transferenciasRecebidas = new ArrayList<>();
 
     public Cliente() {
     }
@@ -60,5 +62,21 @@ public class Cliente {
 
     public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
+    }
+
+    public List<Transacao> getTransferenciasFeitas() {
+        return transferenciasFeitas;
+    }
+
+    public void setTransferenciasFeitas(List<Transacao> transferenciasFeitas) {
+        this.transferenciasFeitas = transferenciasFeitas;
+    }
+
+    public List<Transacao> getTransferenciasRecebidas() {
+        return transferenciasRecebidas;
+    }
+
+    public void setTransferenciasRecebidas(List<Transacao> transferenciasRecebidas) {
+        this.transferenciasRecebidas = transferenciasRecebidas;
     }
 }

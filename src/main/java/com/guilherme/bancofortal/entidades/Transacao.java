@@ -1,5 +1,7 @@
 package com.guilherme.bancofortal.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -20,14 +22,19 @@ public class Transacao {
 
     @JoinColumn
     @OneToOne
+    @JsonIgnore
     private Cliente pagador;
 
     @JoinColumn
     @OneToOne
+    @JsonIgnore
     private Cliente recebedor;
 
     @Column(name = "data_hora")
     private LocalDateTime dataHora;
+
+    public Transacao() {
+    }
 
     public Transacao(BigDecimal valor, Cliente pagador, Cliente recebedor, LocalDateTime dataHora) {
         this.valor = valor;

@@ -27,25 +27,29 @@ public class ControladorTransacao {
     @PostMapping
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
-    public void transferencia(@RequestBody TransacaoDTO transacao) throws TransferenciaInvalidaException, ClienteNaoEncontradoException {
-        var pagador = repoCliente.findById(transacao.getIdPagador())
+    public void transferencia(@RequestBody TransacaoDTO transacaoDTO) throws TransferenciaInvalidaException, ClienteNaoEncontradoException {
+        var pagador = repoCliente.findById(transacaoDTO.getIdPagador())
                 .orElseThrow(() -> new ClienteNaoEncontradoException("Cliente não encontrado"));
-        var recebedor = repoCliente.findById(transacao.getIdRecebedor())
+        var recebedor = repoCliente.findById(transacaoDTO.getIdRecebedor())
                 .orElseThrow(() -> new ClienteNaoEncontradoException("Cliente não encontrado"));
 
-        BigDecimal valorBigDecimal = BigDecimal.valueOf(transacao.getValor());
+        BigDecimal valorBigDecimal = BigDecimal.valueOf(transacaoDTO.getValor());
 
         boolean transacaoInvalida = pagador.getSaldo().compareTo(valorBigDecimal) < 0;
         if (transacaoInvalida) {
             throw new TransferenciaInvalidaException("Saldo insuficiente");
         }
 
+        var transacao = new Transacao(valorBigDecimal, pagador, recebedor, LocalDateTime.now());
+
         BigDecimal novoSaldoPagador = pagador.getSaldo().subtract(valorBigDecimal);
         pagador.setSaldo(novoSaldoPagador);
+        pagador.getTransferenciasFeitas().add(transacao);
 
         BigDecimal novoSaldoRecebedor = recebedor.getSaldo().add(valorBigDecimal);
         recebedor.setSaldo(novoSaldoRecebedor);
+        recebedor.getTransferenciasRecebidas().add(transacao);
 
-        repoTransacao.save(new Transacao(valorBigDecimal, pagador, recebedor, LocalDateTime.now()));
+        repoTransacao.save(transacao);
     }
 }
