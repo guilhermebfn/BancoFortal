@@ -1,25 +1,38 @@
 package com.guilherme.bancofortal.controladores;
 
-import com.guilherme.bancofortal.dto.UsuarioDTO;
 import com.guilherme.bancofortal.entidades.Usuario;
-import com.guilherme.bancofortal.repositorios.RepoUsuario;
+import com.guilherme.bancofortal.service.impl.UsuarioServiceImpl;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
-@RequestMapping("/")
+@RequestMapping("/usuario")
 public class ControladorUsuario {
 
-    private RepoUsuario repoUsuario;
+    private final UsuarioServiceImpl servicoUsuario;
+    private final PasswordEncoder passwordEncoder;
 
-    @PostMapping("cadastro")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void cadastrar(@RequestBody Usuario usuario) {
-        repoUsuario.save(usuario);
+    public ControladorUsuario(UsuarioServiceImpl servicoUsuario, PasswordEncoder passwordEncoder) {
+        this.servicoUsuario = servicoUsuario;
+        this.passwordEncoder = passwordEncoder;
     }
 
-//    @GetMapping("entrar")
-//    public UsuarioDTO entrar() {
+
+    @PostMapping("/cadastro")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void cadastrar(@RequestBody @Valid Usuario usuario) {
+        System.out.println(("Aqui"));
+
+        String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
+        usuario.setSenha(senhaCriptografada);
+        servicoUsuario.gravar(usuario);
+    }
+
+//    @PostMapping("entrar")
+//    public void entrar() {
 //
 //    }
 }
