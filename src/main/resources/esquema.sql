@@ -8,7 +8,7 @@ CREATE TABLE cliente (
 CREATE TABLE transacao (
     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     valor INTEGER,
-    padagor_id INTEGER FOREIGN KEY(),
+    pagador_id INTEGER FOREIGN KEY(),
     recebedor_id INTEGER FOREIGN KEY(),
     data_hora TIMESTAMP,
     PRIMARY KEY(id),
