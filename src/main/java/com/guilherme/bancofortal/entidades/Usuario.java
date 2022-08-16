@@ -12,12 +12,15 @@ public class Usuario {
     private Integer id;
 
     @Column(name = "nome_usuario")
-    @NotEmpty(message = "{campo.nome-usuario.obrigatorio}")
+    @NotEmpty(message = "O campo nome de usuário é obrigatório")
     private String nomeUsuario;
 
     @Column
-    @NotEmpty(message = "{campo.senha.obrigatorio}")
+    @NotEmpty(message = "O campo senha é obrigatório")
     private String senha;
+
+    public Usuario() {
+    }
 
     public Usuario(Integer id, String nomeUsuario, String senha) {
         this.id = id;
