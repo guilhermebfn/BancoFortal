@@ -15,8 +15,8 @@ import java.io.IOException;
 
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    private JwtService jwtService;
-    private UsuarioServiceImpl servicoUsuario;
+    private final JwtService jwtService;
+    private final UsuarioServiceImpl servicoUsuario;
 
     public JwtAuthFilter(JwtService jwtService, UsuarioServiceImpl servicoUsuario) {
         this.jwtService = jwtService;
@@ -38,8 +38,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 user.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(user);
             }
-
-            filterChain.doFilter(request, response);
         }
+
+        filterChain.doFilter(request, response);
     }
 }

@@ -57,16 +57,4 @@ public class JwtService {
     public String obterNomeUsuario(String token) throws ExpiredJwtException {
         return obterClaims(token).getSubject();
     }
-
-    public static void main(String[] args) {
-        var jwtService = new JwtService();
-        jwtService.expString = "30";
-        var usuario = new Usuario(1, "Guilherme", "oi");
-        String token = jwtService.gerarToken(usuario);
-
-        boolean isTokenValido = jwtService.tokenValido(token);
-        System.out.println("Token válido: " + isTokenValido);
-
-        System.out.println(jwtService.obterNomeUsuario(token));
-    }
 }
